@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +18,7 @@ public class CatalogPage {
 	@FindBy (css = "div[class='inventory_item_name']")
 	private List<WebElement> products;
 	
-	@FindBy (css = "//div[@class='pricebar']/button")
+	@FindBy (css = ".shopping_cart_link")
 	private WebElement goToCartButton;
 	
 	private By addButton = By.xpath("//div[@class='pricebar']/button");
@@ -28,6 +29,8 @@ public class CatalogPage {
 	}
 	
 	public YourCartPage goToCart() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView()", goToCartButton);
 		goToCartButton.click();
 		return new YourCartPage(driver);
 	}
@@ -64,7 +67,7 @@ public class CatalogPage {
 			goodsName = prod.get(i).getText();
 			if (goodsNeededList.contains(goodsName)) {
 				nameButton = driver.findElements(addButton).get(i).getText();
-				Assert.assertEquals(nameButton, "REMOVE");
+				Assert.assertEquals(nameButton, "Remove");
 				checkButton++;
 				if (checkButton==goods.length) {
 					return true;
