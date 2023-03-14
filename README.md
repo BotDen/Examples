@@ -11,4 +11,4 @@ This repository keeps my examples of test cases and auto tests.
 "https://www.saucedemo.com/" это веб-приложение, от "Sauce Labs", реализующее функционал интернет магазина. Создано для практики в автоматезированном тестировании. 
 В папке **"Saucedemo"** находятся несколько примеров тест кейсов и папка **"autotestCase"**.
 В папке **"autotestCase"** лежат файлы в которых выполнена практика по испольхованию локаторов, циклов и условий. Так же имеется папка **"saucedemoPageFactory"**.
-В папке **"saucedemoPageFactory"** лежит end2end тест. Выполнен рефакторинг кода и применен page factory design.
+В папке **"saucedemoPageFactory"** лежит end2end тест. Это тот же тест, что и "E2E_0001_BuyGoodsFromLoginToPay" только выполнен рефакторинг кода в соответствии с page factory design.
