@@ -39,7 +39,7 @@ public class CatalogPage {
 		return products;
 	}
 	
-	public void addToCart(WebDriver driver, String[] goods) {
+	public void addToCart(String[] goods) {
 		String goodsName;
 		int addedToCart = 0;
 		List<String> goodsNeededList = Arrays.asList(goods);
@@ -57,7 +57,7 @@ public class CatalogPage {
 	}
 	
 	// checking modify the button's name addToCart to remove
-	public boolean verifyChangeingNameAddButton(WebDriver driver, String[] goods) {
+	public boolean verifyChangeingNameAddButton(String[] goods) {
 		String goodsName;
 		String nameButton;
 		int checkButton = 0;

@@ -33,7 +33,7 @@ public class YourCartPage {
 	}
 	
 	// verification added goods in the Cart
-	public boolean checkItem (WebDriver driver, String[] goods) {
+	public boolean checkItem (String[] goods) {
 		String goodsName;
 		int itemToCartChecked = 0;
 		List<String> goodsList = Arrays.asList(goods);

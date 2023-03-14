@@ -45,7 +45,7 @@ public class OverviewPage {
 	}
 	
 	// count tax bill for choose goods
-	public double countTaxBill (WebDriver driver, String[] goodsNeeded, int tax) {
+	public double countTaxBill (String[] goodsNeeded, int tax) {
 		String goodsName;
 		String stringPrice;
 		double price;
@@ -73,7 +73,7 @@ public class OverviewPage {
 	}
 	
 	// count total bill with price and tax
-	public double countSumBill (WebDriver driver, String[] goodsNeeded, double taxBill ) {
+	public double countSumBill (String[] goodsNeeded, double taxBill ) {
 		String goodsName;
 		String stringPrice;
 		double price;

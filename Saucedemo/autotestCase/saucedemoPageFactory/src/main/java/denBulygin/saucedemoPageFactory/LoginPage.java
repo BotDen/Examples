@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 	WebDriver driver;
+	String url = "https://www.saucedemo.com/";
 	
 	public LoginPage(WebDriver driver) {
 		this.driver = driver;
@@ -27,5 +28,9 @@ public class LoginPage {
 		userPassword.sendKeys(password);
 		loginButton.click();
 		return new CatalogPage(driver);
+	}
+	
+	public void goToSite() {
+		driver.get(url);
 	}
 }

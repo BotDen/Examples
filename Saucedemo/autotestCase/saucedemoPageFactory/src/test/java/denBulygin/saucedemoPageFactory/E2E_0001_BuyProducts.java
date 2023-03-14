@@ -1,45 +1,47 @@
 package denBulygin.saucedemoPageFactory;
 
-import java.time.Duration;
+
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import saucedemoPageFactory.BaseComponents.BaseComponent;
 
-public class E2E_0001_BuyProducts {
+public class E2E_0001_BuyProducts extends BaseComponent {
+	WebDriver driver;
 
-	public static void main(String[] args) {
-		String url = "https://www.saucedemo.com/";
+	@DataProvider
+	public Object[][] getData() {
 		String userName = "standard_user";
 		String userPassword = "secret_sauce";
+		String[] goods = {"Sauce Labs Bolt T-Shirt", "Test.allTheThings() T-Shirt (Red)"};
+		String[] goods1 = {"Sauce Labs Backpack"};
+		return new Object[][] {{userName, userPassword, goods}, {userName, userPassword, goods1}};
+	}
+	
+	@Test (dataProvider = "getData")
+	public void e2e_0001_BuyProducts(String userName, String userPassword, String[] goods) {
 		String firstName = "Дмитрий";
 		String lastName = "Петров";
 		String zipCode = "445056";
-		String[] goods = {"Sauce Labs Bolt T-Shirt", "Test.allTheThings() T-Shirt (Red)"};
-		String confirmationHeader = "THANK YOU FOR YOUR ORDER";
+		String confirmationHeader = "Thank you for your order!";
 		String confirmationMessage = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
 		int tax = 8;
 		
-		WebDriverManager.chromedriver().setup();
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-		driver.get(url);
-		
-		LoginPage loginPage = new LoginPage(driver);
+		loginPage.goToSite();
 		CatalogPage catalogPage = loginPage.loginAccount(userName, userPassword);
-		catalogPage.addToCart(driver, goods);
-		Boolean matchButtonName = catalogPage.verifyChangeingNameAddButton(driver, goods);
+		catalogPage.addToCart(goods);
+		Boolean matchButtonName = catalogPage.verifyChangeingNameAddButton(goods);
 		Assert.assertTrue(matchButtonName);
 		YourCartPage yourCartPage = catalogPage.goToCart();
-		Boolean matchProdInCart = yourCartPage.checkItem(driver, goods);
+		Boolean matchProdInCart = yourCartPage.checkItem(goods);
 		Assert.assertTrue(matchProdInCart);
 		YourInformationPage yourInformationPage = yourCartPage.goToYourInformation();
 		OverviewPage overviewPage = yourInformationPage.inputYourInformation(firstName, lastName, zipCode);
-		double countBill = overviewPage.countSumBill(driver, goods, tax);
-		double countTax = overviewPage.countTaxBill(driver, goods, tax);
+		double countTax = overviewPage.countTaxBill(goods, tax);
+		double countBill = overviewPage.countSumBill(goods, countTax);
 		double grabBill = overviewPage.grabBillStr();
 		double grabTax = overviewPage.grabTaxStr();
 		Assert.assertEquals(countBill, grabBill);
@@ -49,8 +51,6 @@ public class E2E_0001_BuyProducts {
 		String grabConfirmMessage = completePage.getConfirmMessage();
 		Assert.assertEquals(grabConfirmHeader, confirmationHeader);
 		Assert.assertEquals(grabConfirmMessage, confirmationMessage);
-		
-		driver.quit();
 	}
 
 }
